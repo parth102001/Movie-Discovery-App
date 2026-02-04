@@ -10,7 +10,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <FlatList
         data={movies}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         renderItem={({ item }) => <MovieCard movie={item} />}

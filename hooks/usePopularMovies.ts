@@ -1,10 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
-/* build-ref:delta */
+import { useEffect, useRef, useState } from "react";
+import { BASE_URL } from "../constants/api";
 
 const API_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
-const BASE_URL = "https://api.themoviedb.org/3";
 
 export default function usePopularMovies() {
   const [movies, setMovies] = useState<any[]>([]);
@@ -13,10 +11,14 @@ export default function usePopularMovies() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const fetchMovies = async (pageNumber = 1, refresh = false) => {
-    if (loading || pageNumber > totalPages) return;
+  const isFetchingRef = useRef(false);
 
+  const fetchMovies = async (pageNumber: number = page) => {
+    if (isFetchingRef.current || pageNumber > totalPages) return;
+
+    isFetchingRef.current = true;
     setLoading(true);
+
     try {
       const res = await axios.get(`${BASE_URL}/movie/popular`, {
         params: {
@@ -26,29 +28,38 @@ export default function usePopularMovies() {
           region: "IN",
         },
       });
+      console.log("res", res);
+      setMovies((prev) =>
+        pageNumber === 1 ? res.data.results : [...prev, ...res.data.results],
+      );
 
       setTotalPages(res.data.total_pages);
-      setMovies((prev) =>
-        refresh ? res.data.results : [...prev, ...res.data.results]
-      );
       setPage(pageNumber + 1);
-    } catch (err) {
-      console.error("Failed to fetch movies");
+    } catch (err: any) {
+      console.log("Popular movies error:", err);
     } finally {
       setLoading(false);
       setRefreshing(false);
+      isFetchingRef.current = false;
     }
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(1);
   }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
     setPage(1);
-    fetchMovies(1, true);
+    setTotalPages(1);
+    fetchMovies(1);
   };
 
-  return { movies, fetchMovies, loading, refreshing, onRefresh };
+  return {
+    movies,
+    fetchMovies,
+    loading,
+    refreshing,
+    onRefresh,
+  };
 }
