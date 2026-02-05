@@ -1,50 +1,42 @@
-# Welcome to your Expo app 👋
+🎬 Movie Discovery App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application built with Expo that allows users to discover popular movies, search movies, view detailed information (cast & reviews), and submit reviews with image attachments.
 
-## Get started
+🛠 Tech Stack
 
-1. Install dependencies
+React Native
+Expo
+Expo Router
+Axios
+TMDB API
+Expo Image Picker
+EAS Build
 
-   ```bash
-   npm install
-   ```
+🔑 Environment Setup
 
-2. Start the app
+Create a .env file in the project root:
+EXPO_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
+For production APK builds, the API key is configured using EAS environment variables.
 
-   ```bash
-   npx expo start
-   ```
+▶️ Run Locally
+npm install
+npx expo start
 
-In the output, you'll find options to open the app in a
+Open using Expo Go on a real device.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+📦 APK Build (Android)
+The APK is generated using Expo EAS Build.
+eas build -p android --profile preview
+Build type: APK
+Signing handled via Expo remote keystore
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+🌐 APIs Used (TMDB)
 
-## Get a fresh project
+/movie/popular
+/search/movie
+/movie/{id}
+/movie/{id}/credits
+/movie/{id}/reviews
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+TMDB does not support uploading user reviews or images.
+The review upload feature is implemented as a mock upload to demonstrate file handling.
