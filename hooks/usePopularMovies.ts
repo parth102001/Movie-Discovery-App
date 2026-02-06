@@ -28,7 +28,7 @@ export default function usePopularMovies() {
           region: "IN",
         },
       });
-      console.log("res", res);
+
       setMovies((prev) =>
         pageNumber === 1 ? res.data.results : [...prev, ...res.data.results],
       );
