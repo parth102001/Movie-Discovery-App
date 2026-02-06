@@ -40,3 +40,7 @@ Signing handled via Expo remote keystore
 
 TMDB does not support uploading user reviews or images.
 The review upload feature is implemented as a mock upload to demonstrate file handling.
+
+Note
+TMDB API access may be restricted in certain regions (including India).
+While running the project locally or using the APK, please ensure that a VPN is enabled if movie data does not load.
